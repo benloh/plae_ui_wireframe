@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Blank Template for Bootstrap</title>
+        <!-- Bootstrap core CSS -->
+        <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="style.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    </head>
+    <body>
+        <div class="container">
+</div>
+        <nav class="navbar navbar-default" role="navigation"> 
+            <div class="container-fluid"> 
+                <div class="navbar-header"> 
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> 
+                        <span class="sr-only">Toggle navigation</span> 
+                        <span class="icon-bar"></span> 
+                        <span class="icon-bar"></span> 
+                        <span class="icon-bar"></span> 
+                    </button>                     
+                    <a class="navbar-brand" href="#">Red Dog</a> 
+                </div>                 
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> 
+                    <form class="navbar-form navbar-left" role="search"> 
+                        <div class="form-group"> 
+                            <input type="text" class="form-control" placeholder="Red Dog"> 
+                        </div>                         
+                        <button type="submit" class="btn btn-default">Submit</button>                         
+                    </form>                     
+                </div>                 
+            </div>             
+        </nav>
+        <div style="text-align:center">
+            <img src="img/1.jpg" width="400" /> 
+        </div>
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#tab1" data-toggle="tab">Draw<br></a>
+            </li>             
+            <li>
+                <a href="#tab2" data-toggle="tab">Mark<br></a>
+            </li>             
+            <li>
+                <a href="#tab3" data-toggle="tab">Slider</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab1">
+                <div>
+                    <div class="btn-group"> 
+                        <button type="button" class="btn btn-default">Pen</button>
+                        <button type="button" class="btn btn-default">Eraser</button>
+                        <button type="button" class="btn btn-default">.</button>
+                        <button type="button" class="btn btn-default">o</button>
+                        <button type="button" class="btn btn-default">O</button>
+                        <button type="button" class="btn btn-default">Red</button>
+                        <button type="button" class="btn btn-default">Orange</button>
+                        <button type="button" class="btn btn-default">Yellow</button>
+                        <button type="button" class="btn btn-default">Green</button>
+                        <button type="button" class="btn btn-default">Blue</button>
+                        <button type="button" class="btn btn-default">Purple</button>
+                        <button type="button" class="btn btn-default">Move</button>
+                    </div>
+                    <div style="text-align:center">
+                        <img src="img/1.jpg" width="400" /> 
+                    </div>
+                </div>
+                <canvas width="100%" height="100%"></canvas>
+            </div>
+            <div class="tab-pane" id="tab2">
+                <div style="text-align: center">
+                    <svg width="600px" height="200px" style="background-color:#eef"></svg>
+                    <br />
+                    <button type="button" class="btn btn-default">Solid</button>
+                    <button type="button" class="btn btn-default">Liquid</button>
+                    <button type="button" class="btn btn-default">Gas</button>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab3">
+                <input type="range" style="height:25px;width:200px;transform:rotate(270deg);" class="clearfix pull-left">
+                <div style="text-align: center"> 
+                    <svg width="600px" height="200px" style="background-color:#eef"></svg>
+                    <br />
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+    </body>
+</html>
