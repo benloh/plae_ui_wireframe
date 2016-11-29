@@ -62,24 +62,24 @@
                                 <br />
                                 <label>
                                     <input type="range"> 
-                                    <input id="set_npc_count" type="text" readonly> NPC Count
+                                    <input id="set_npc_count" min="0" max="60" value="0" type="text" readonly> NPC Count
                                 </label>
                                 <br />
                                 <label>
                                     <input type="range"> 
-                                    <input id="set_room_temp" type="text" readonly> Ambient Temperature
+                                    <input id="set_room_temp" min="0" max="300" value="70" type="text" readonly> Ambient Temperature
                                 </label>
                                 <label>
                                     <input type="range"> 
-                                    <input id="set_wand_temp" type="text" readonly> General Wand Temperature
+                                    <input id="set_wand_temp" min="-10000" max="10000" value="72" type="text" readonly> General Wand Temperature
                                 </label>
                                 <label>
                                     <input type="range"> 
-                                    <input id="set_left_wand_temp" type="text" readonly> Left Wand Temperature
+                                    <input id="set_left_wand_temp" min="-10000" max="10000" value="-10000" type="text" readonly> Left Wand Temperature
                                 </label>
                                 <label>
                                     <input type="range"> 
-                                    <input id="set_right_wand_temp" type="text" readonly> Right Wand Temperature
+                                    <input id="set_right_wand_temp" min="-10000" max="10000" value="10000" type="text" readonly> Right Wand Temperature
                                 </label>
                                 <br />
                                 <div class="well">
@@ -100,20 +100,20 @@
                                 <div class="well">
                                     <h4>Advanced Features</h4>
                                     <h5>Distance Parameters</h5>
-                                    <label><input id="set_trans_sol" type="text"> Liquid to Solid</label>
-                                    <label><input id="set_trans_gas" type="text"> Solid to Gas</label>
-                                    <label><input id="set_trans_delta" type="text"> Hysteresis</label>
+                                    <label><input id="set_trans_sol" value="1.0" type="text"> Liquid to Solid</label>
+                                    <label><input id="set_trans_gas" value="1.5" type="text"> Solid to Gas</label>
+                                    <label><input id="set_trans_delta" value="0.25" type="text"> Hysteresis</label>
                                     <h5>Speed Parameters</h5>
                                     <label>
                                         <select id="set_test_id">
-                                            <option>use avg speed</option>
+                                            <option default>use avg speed</option>
                                             <option>use instant speed</option>
                                         </select>
                                         Algorithm
                                     </label>
-                                    <label><input id="set_speed_liq" type="text"> Min Liquid (Unit per sec)</label>
-                                    <label><input id="set_speed_gas" type="text"> Min Gas (Unit per sec)</label>
-                                    <label><input id="set_avg_period" type="text"> Avg MS Window</label>
+                                    <label><input id="set_speed_liq" value="0.5" type="text"> Min Liquid (Unit per sec)</label>
+                                    <label><input id="set_speed_gas" value="3.0" type="text"> Min Gas (Unit per sec)</label>
+                                    <label><input id="set_avg_period" value="1000" type="text"> Avg MS Window</label>
                                 </div>
                             </div>
                             <div class="col-xs-9">
