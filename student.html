@@ -20,6 +20,60 @@
     <body>
         <div class="container">
 </div>
+<!--
+
+Student UI Design Notes
+=======================
+
+The specific student UI configuration is set via the game selected by the Teacher UI.
+
+There are two types of configurations coming from the teacher:
+
+
+1. Game-specific presets 
+These are defined by the game yaml files.  They are initialized when the student app first loads, 
+and whenever the teacher updates the selected game.
+
+
+2. Impromptu settings
+These are determined by the teacher on-the-fly according to the lesson at the moment.  These 
+may be set at any time during the session.
+
+
+The impact of both on the UI are essentially the same: Features are enabvled/disabled+hidden.
+
+For example, for the Day 1 and 2 Macro Experiment activity, only the "Draw" tab is visible set by game presets.  The "Mark" and "Slider" tabs would be hidden.
+But perhaps halfway through the period, the teacher decides she wants to let students use the markers, so she could check "Set Student Controls: Marker" on 
+the teacher UI, and the "Marker" tab will be enabled on the student iPad.
+
+
+
+IMPORTANT: 
+Student iPads might come in and out.  So we can't rely on all student iPads being active when the teacher initiates a specific command.  Instead the 
+student iPad should probably query the teacher iPad for the current UI state when it first starts up.  This also means the teacher iPad needs to 
+maintain the current state and respond to student requests for the current UI state.
+
+
+
+Device Name
+===========
+
+The "Red Dog" label at the top represents the device name for the iPad.  A single iPad might be shared by up to 8 different students.  The
+iPad name will not change but will be persistently identified across the students.
+
+The name should be editable.  So the input and submit fields should only be displayed if you click the "Red Dog" title (or perhaps a very small
+"Change Name" link on the upper right or somewhere where it's not likely to be accidentally pushed)
+
+
+
+Unisys
+======
+
+All student initiated actions trigger a Unisys call.  This logs the event on the server for playback and research logging.
+
+
+
+-->
         <nav class="navbar navbar-default" role="navigation"> 
             <div class="container-fluid"> 
                 <div class="navbar-header"> 
@@ -42,17 +96,23 @@
             </div>             
         </nav>
         <div style="text-align:center">
-            <img src="img/1.jpg" width="400" /> 
+            <img src="img/1.jpg" width="400" /> <br/>
+            <input type="checkbox"> Show Particle Speed | 
+            <input type="checkbox"> Show Particle Energy | 
+            <input type="checkbox"> Show Particle Distance | 
         </div>
         <ul class="nav nav-tabs">
             <li class="active">
                 <a href="#tab1" data-toggle="tab">Draw<br></a>
             </li>             
             <li>
-                <a href="#tab2" data-toggle="tab">Mark<br></a>
+                <a href="#tab2" data-toggle="tab">Graph<br></a>
             </li>             
             <li>
-                <a href="#tab3" data-toggle="tab">Slider</a>
+                <a href="#tab3" data-toggle="tab">Mark<br></a>
+            </li>             
+            <li>
+                <a href="#tab4" data-toggle="tab">Slider</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -72,27 +132,147 @@
                         <button type="button" class="btn btn-default">Purple</button>
                         <button type="button" class="btn btn-default">Move</button>
                     </div>
-                    <div style="text-align:center">
-                        <img src="img/1.jpg" width="400" /> 
-                    </div>
+                    <pre>
+Draw Tab
+========
+
+By default, when the drawing tab is enabled, the student can select drawing tools to draw on top of the simulation displayed in the top panel
+of the screen.
+
+Special Cases
+
+1. Create Custom Button
+
+2. Create Custom Slider Labels
+
+---
+
+The "Show Particle Speed," "Show Particle Energy", and "Show Particle Distance" checkboxes may or may not be implemented 
+depending on how the displayList is implemented.  These are the lightning bolt, arrow, and flame indicators that appear
+above each particle.
+
+Ideally students can make decisions about how their local display of the simulation is portrayed, e.g. one studnet
+might show speed, another show distance, while the teacher shows energy on the main projector.  But the displayList
+implementation may not support this.
+
+                    </pre>
                 </div>
                 <canvas width="100%" height="100%"></canvas>
             </div>
             <div class="tab-pane" id="tab2">
+                <input type="range" style="height:25px;width:200px;transform:rotate(270deg);" class="clearfix pull-left">
+                <div style="text-align: center"> 
+                    <svg width="600px" height="200px" style="background-color:#eef"></svg>
+                    <br />
+                    <input type="checkbox"> Show Slow
+                    <input type="checkbox"> Show Medium
+                    <input type="checkbox"> Show Fast
+                    <input type="checkbox"> Show All
+                </div>
+                <pre>
+Graph
+==========
+
+The buttons on this tab toggle filters on and off.  E.g. "Show Slow" would only plot particles that are
+at a slow speed.
+
+[Work in Progress: This is still being worked out.  The team is still undecided about how to implement
+this.
+
+This may need to be integrated with the "Marker" tab.
+]
+
+
+                </pre>
+            </div>
+            <div class="tab-pane" id="tab3">
                 <div style="text-align: center">
                     <svg width="600px" height="200px" style="background-color:#eef"></svg>
                     <br />
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#drawButton">&lt;Create Custom Marker&gt;</button>
                     <button type="button" class="btn btn-default">Solid</button>
                     <button type="button" class="btn btn-default">Liquid</button>
                     <button type="button" class="btn btn-default">Gas</button>
                 </div>
+                <div id="drawButton" class="modal fade" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Draw Custom Button</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="btn-group"> 
+                            <button type="button" class="btn btn-default">Pen</button>
+                            <button type="button" class="btn btn-default">Eraser</button>
+                            <button type="button" class="btn btn-default">.</button>
+                            <button type="button" class="btn btn-default">o</button>
+                            <button type="button" class="btn btn-default">O</button>
+                            <button type="button" class="btn btn-default">Red</button>
+                            <button type="button" class="btn btn-default">Orange</button>
+                            <button type="button" class="btn btn-default">Yellow</button>
+                            <button type="button" class="btn btn-default">Green</button>
+                            <button type="button" class="btn btn-default">Blue</button>
+                            <button type="button" class="btn btn-default">Purple</button>
+                            <button type="button" class="btn btn-default">Move</button>
+                        </div>
+                        <canvas width="250px" height="250px"></canvas>
+                      </div>
+                      <div class="modal-footer">
+                        <input value="My Untitled Button">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                <pre>
+Marker Tab
+==========
+
+The marker buttons that are populated depends on the specific game variant chosen.
+
+For example, for Day 3, there will only be a single button called "Create Custom Marker".
+When the student pushes that button, they will be given a small drawing board via a modal dialog.
+After they finish drawing, they click "Save" and the image is saved and the marker button displays the image.
+Every time they click on the new custom button, a timestamped marker is plotted.
+
+Other game variants might pre-populate the buttons for the students, e.g. with a "Solid,"
+"Liquid," and "Gas" button, but offer "Create Custom Marker" button.
+
+
+                </pre>
             </div>
-            <div class="tab-pane" id="tab3">
+            <div class="tab-pane" id="tab4">
                 <input type="range" style="height:25px;width:200px;transform:rotate(270deg);" class="clearfix pull-left">
                 <div style="text-align: center"> 
                     <svg width="600px" height="200px" style="background-color:#eef"></svg>
                     <br />
                 </div>
+                <pre>
+Slider Tab
+==========
+
+Sliders work similar to markers: they are defined by the currently selected specified game variant.
+
+The labels for the top and bottom of the slider, along with the slider range and units will be determined
+via the settings file.
+
+In some game variants, the labels for each end of the slider might be implemented as images
+drawn on the screen.  (It's not clear if this actually a requirement at the moment).
+
+
+Variants:
+
+1. Slider controls a the state of a graphic of particle speed.  
+See bees-flower app, select "Particle Slider" for an example.
+
+2. Slider controls the state of a ice
+See bees-flower, select "Snowman Slider" for an example.
+
+
+
+                </pre>
             </div>
         </div>
         <!-- Bootstrap core JavaScript
