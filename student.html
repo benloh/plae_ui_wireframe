@@ -45,6 +45,12 @@ For example, for the Day 1 and 2 Macro Experiment activity, only the "Draw" tab 
 But perhaps halfway through the period, the teacher decides she wants to let students use the markers, so she could check "Set Student Controls: Marker" on
 the teacher UI, and the "Marker" tab will be enabled on the student iPad.
 
+In the interest of simplicity, for now each tab will be customized for a particular
+Day's activity.
+
+At some point in the future, we may want to allow tabs to be configured on the fly
+via settings files, but until we have a better grasp of what is needed, we'll
+make them static.
 
 
 IMPORTANT:
@@ -96,16 +102,19 @@ All student initiated actions trigger a Unisys call.  This logs the event on the
         </nav>
         <ul class="nav nav-tabs">
             <li class="active">
-                <a href="#tab1" data-toggle="tab">Draw<br></a>
+                <a href="#tab1" data-toggle="tab">1 Draw<br></a>
             </li>
             <li>
-                <a href="#tab2" data-toggle="tab">Graph<br></a>
+                <a href="#tab2" data-toggle="tab">2 State Slider</a>
             </li>
             <li>
-                <a href="#tab3" data-toggle="tab">Mark<br></a>
+                <a href="#tab3" data-toggle="tab">3 Graph Slider<br></a>
             </li>
             <li>
-                <a href="#tab4" data-toggle="tab">Slider</a>
+                <a href="#tab4" data-toggle="tab">4 Particle Speed Slider<br></a>
+            </li>
+            <li>
+                <a href="#tab5" data-toggle="tab">5 Custom Button<br></a>
             </li>
         </ul>
         <div class="tab-content">
@@ -148,13 +157,17 @@ When the drawing is saved:
 
 * CURRENT_DRAWING call is made to the server with data.studentId and data.drawingURL
 
-The pen drawing buttons are a demo. The buttons should duplicate the definitions in #bees-student.  Make sure to copy the css settings from bees-student/_appshell.html, and the 'drawing-board-control-navigation-*' hacks in bees-student/student-default.js:line 93.
+The pen drawing buttons on this page are just placeholders. The buttons should duplicate the definitions in #bees-student.  Make sure to copy the css settings from bees-student/_appshell.html, and the 'drawing-board-control-navigation-*' hacks in bees-student/student-default.js:line 93.
 
 ---
+
+The buttons on this tab toggle filters on and off.  E.g. "Show Slow" would only plot particles that are
+at a slow speed.
 
 The "Show Particle Speed," "Show Particle Energy", and "Show Particle Distance" checkboxes may or may not be implemented
 depending on how the displayList is implemented.  These are the lightning bolt, arrow, and flame indicators that appear
 above each particle.
+
 
 Ideally students can make decisions about how their local display of the simulation is portrayed, e.g. one studnet
 might show speed, another show distance, while the teacher shows energy on the main projector.  But the displayList
@@ -165,9 +178,77 @@ implementation may not support this.
                 <canvas width="100%" height="100%"></canvas>
             </div>
             <div class="tab-pane" id="tab2">
-                <input type="range" style="height:25px;width:200px;transform:rotate(270deg);" class="clearfix pull-left">
+                <img class="slider-top" src="">
+                <input type="range" style="height:25px;width:200px;transform:rotate(270deg) translate(-110px,-50px);" class="clearfix">
+                <img class=slider-bottom" src="">
+                <div class="selected_value">
+                    <img src="">
+                </div>
                 <div style="text-align: center">
                     <svg width="600px" height="200px" style="background-color:#eef"></svg>
+                </div>
+                <pre>
+State Slider
+==============
+
+For Day 1, 2, 3 activities.
+
+In this case the slider has 5 states: ice, melting, liquid, evaporating, gas
+
+The image will show a different state depending on the slider setting.
+
+Whenever the slider changes, the app emits a SCATTERPLOT_EVENT.
+
+The student app will plot the event locally to provide feedback to the student about their work.
+                </pre>
+            </div>
+            <div class="tab-pane" id="tab3">
+                <img class="slider-top" src="">
+                <input type="range" style="height:25px;width:200px;transform:rotate(270deg) translate(-110px,-50px);" class="clearfix">
+                <img class=slider-bottom" src="">
+                <select>
+                    <option>Speed: Number of Slow Particles</option>
+                    <option>Speed: Number of Medium Particles</option>
+                    <option>Speed: Number of Fast Particles</option>
+                    <option>Distance...</option>
+                    <option>Temperature...</option>
+                </select>
+                <div class="selected_value">
+                    <img src="">
+                </div>
+                <div style="text-align: center">
+                    <svg width="600px" height="200px" style="background-color:#eef"></svg>
+                </div>
+                <pre>
+Graph Slider
+=============
+
+This works like the State Slider, only there is no image displaying the state.  Instead, the plot just goes up
+
+                </pre>
+            </div>
+            <div class="tab-pane" id="tab4">
+                <img class="slider-top" src="">
+                <input type="range" style="height:25px;width:200px;transform:rotate(270deg) translate(-110px,-50px);" class="clearfix">
+                <img class=slider-bottom" src="">
+                <div class="selected_value">
+                    <img src="">
+                </div>
+                <div style="text-align: center">
+                    <svg width="600px" height="200px" style="background-color:#eef"></svg>
+                </div>
+                <pre>
+Particle Speed Slider
+=====================
+
+This is essentially a variant of the State Slider.  The difference here is that an animation of particle speeds is displayed.
+                </pre>
+            </div>
+            <div class="tab-pane" id="tab5">
+                <div style="text-align: center">
+                    <svg width="600px" height="200px" style="background-color:#eef"></svg>
+                    <br />
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#drawButton">&lt;Create Custom Marker&gt;</button>
                     <br />
                     <input type="checkbox"> Show Slow
                     <input type="checkbox"> Show Medium
@@ -175,110 +256,18 @@ implementation may not support this.
                     <input type="checkbox"> Show All
                 </div>
                 <pre>
-Graph
-==========
-
-The buttons on this tab toggle filters on and off.  E.g. "Show Slow" would only plot particles that are
-at a slow speed.
-
-[Work in Progress: This is still being worked out.  The team is still undecided about how to implement
-this.
-
-This may need to be integrated with the "Marker" tab.
-]
-
-
-                </pre>
-            </div>
-            <div class="tab-pane" id="tab3">
-                <div style="text-align: center">
-                    <svg width="600px" height="200px" style="background-color:#eef"></svg>
-                    <br />
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#drawButton">&lt;Create Custom Marker&gt;</button>
-                    <button type="button" class="btn btn-default">Solid</button>
-                    <button type="button" class="btn btn-default">Liquid</button>
-                    <button type="button" class="btn btn-default">Gas</button>
-                </div>
-                <div id="drawButton" class="modal fade" tabindex="-1" role="dialog">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Draw Custom Button</h4>
-                      </div>
-                      <div class="modal-body">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default">Pen</button>
-                            <button type="button" class="btn btn-default">Eraser</button>
-                            <button type="button" class="btn btn-default">.</button>
-                            <button type="button" class="btn btn-default">o</button>
-                            <button type="button" class="btn btn-default">O</button>
-                            <button type="button" class="btn btn-default">Red</button>
-                            <button type="button" class="btn btn-default">Orange</button>
-                            <button type="button" class="btn btn-default">Yellow</button>
-                            <button type="button" class="btn btn-default">Green</button>
-                            <button type="button" class="btn btn-default">Blue</button>
-                            <button type="button" class="btn btn-default">Purple</button>
-                            <button type="button" class="btn btn-default">Move</button>
-                        </div>
-                        <canvas width="250px" height="250px"></canvas>
-                      </div>
-                      <div class="modal-footer">
-                        <input value="My Untitled Button">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                      </div>
-                    </div><!-- /.modal-content -->
-                  </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
-                <pre>
-Marker Tab
-==========
-
-The marker buttons that are populated depends on the specific game variant chosen.
-
-For example, for Day 3, there will only be a single button called "Create Custom Marker".
+Custom Marker Tab
+=================
+Day 3 there is a single button called "Create Custom Marker".
 When the student pushes that button, they will be given a small drawing board via a modal dialog.
 After they finish drawing, they click "Save" and the image is saved and the marker button displays the image.
+
+They will then be asked to add a label to the button.
+
 Every time they click on the new custom button, a timestamped marker is plotted.
-
-Other game variants might pre-populate the buttons for the students, e.g. with a "Solid,"
-"Liquid," and "Gas" button, but offer "Create Custom Marker" button.
-
-
                 </pre>
             </div>
-            <div class="tab-pane" id="tab4">
-                <input type="range" style="height:25px;width:200px;transform:rotate(270deg);" class="clearfix pull-left">
-                <div style="text-align: center">
-                    <svg width="600px" height="200px" style="background-color:#eef"></svg>
-                    <br />
-                </div>
-                <pre>
-Slider Tab
-==========
 
-Sliders work similar to markers: they are defined by the currently selected specified game variant.
-
-The labels for the top and bottom of the slider, along with the slider range and units will be determined
-via the settings file.
-
-In some game variants, the labels for each end of the slider might be implemented as images
-drawn on the screen.  (It's not clear if this actually a requirement at the moment).
-
-
-Variants:
-
-1. Slider controls a the state of a graphic of particle speed.
-See bees-flower app, select "Particle Slider" for an example.
-
-2. Slider controls the state of a ice
-See bees-flower, select "Snowman Slider" for an example.
-
-
-
-                </pre>
-            </div>
         </div>
         <!-- Bootstrap core JavaScript
     ================================================== -->
