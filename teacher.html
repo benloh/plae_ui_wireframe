@@ -15,10 +15,7 @@
                         <a href="#simulation" aria-controls="simulation" role="tab" data-toggle="tab">Control Panel</a>
                     </li>
                     <li role="presentation">
-                        <a href="#annotate" aria-controls="annotate" role="tab" data-toggle="tab">Annotate</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#students" aria-controls="students" role="tab" data-toggle="tab">View Student Work</a>
+                        <a href="#playback" aria-controls="playback" role="tab" data-toggle="tab">Playback</a>
                     </li>
                 </ul>
                 <!-- Tab Content -->
@@ -31,7 +28,7 @@
                                     <select>
                                         <option>Day 1 Activity</option>
                                     </select>
-                                    <label>Background: 
+                                    <label>Background:
                                         <select>
                                             <option>Snow Field</option>
                                         </select>
@@ -61,39 +58,39 @@
                                 </label>
                                 <br />
                                 <label>
-                                    <input type="range"> 
+                                    <input type="range">
                                     <input id="set_npc_count" min="0" max="60" value="0" type="text" readonly> NPC Count
                                 </label>
                                 <br />
                                 <label>
-                                    <input type="range"> 
+                                    <input type="range">
                                     <input id="set_room_temp" min="0" max="300" value="70" type="text" readonly> Ambient Temperature
                                 </label>
                                 <label>
-                                    <input type="range"> 
+                                    <input type="range">
                                     <input id="set_wand_temp" min="-10000" max="10000" value="72" type="text" readonly> General Wand Temperature
                                 </label>
                                 <label>
-                                    <input type="range"> 
+                                    <input type="range">
                                     <input id="set_left_wand_temp" min="-10000" max="10000" value="-10000" type="text" readonly> Left Wand Temperature
                                 </label>
                                 <label>
-                                    <input type="range"> 
+                                    <input type="range">
                                     <input id="set_right_wand_temp" min="-10000" max="10000" value="10000" type="text" readonly> Right Wand Temperature
                                 </label>
                                 <br />
                                 <div class="well">
                                     <h4>Set Student Controls</h4>
-                                    <label> 
+                                    <label>
                                         <input class="control-label" type="checkbox" value=""> Drawing
                                     </label>
-                                    <label> 
+                                    <label>
                                         <input class="control-label" type="checkbox" value=""> Marker
                                     </label>
-                                    <label> 
+                                    <label>
                                         <input class="control-label" type="checkbox" value=""> Custom Buttons
                                     </label>
-                                    <label> 
+                                    <label>
                                         <input class="control-label" type="checkbox" value=""> Slider
                                     </label>
                                 </div>
@@ -120,14 +117,18 @@
                             </div>
                             <div class="col-xs-9">
                                 <div class="well">
-                                    <label><input type="checkbox"> Show Chart</label>
-                                    <select>
-                                        <option value="speed_fast">Speed Fast</option>
-                                        <option value="speed_fast">Speed Med</option>
-                                        <option value="speed_fast">Speed Slow</option>
-                                        <option value="speed_fast">Distance Far</option>
-                                        <option value="speed_fast">Distance Med</option>
-                                        <option value="speed_fast">Distance Near</option>
+                                    <select id="enableRect">
+                                        <option value=false>Hide Stacked Plot</option>
+                                        <option value="stacked-distance">Stacked Distance</option>
+                                        <option value="stacked-energy">Stacked Energy</option>
+                                        <option value="stacked-speed">Stacked Speed</option>
+                                        <option value="stacked-bar">Stacked Bar</option>
+                                    </select>
+                                    <select id="enableScatter">
+                                        <option value=false>Hide Scatter Plot</option>
+                                        <option value="category-marker">Marker</option>
+                                        <option value="category-state">States</option>
+                                        <option value="category-speed">Speed</option>
                                     </select>
                                     <label>Quantize: <select>
                                             <option value="1">1</option>
@@ -137,12 +138,66 @@
                                         </select>
                                     </label>
                                 </div>
+
+                                <div class="col-xs-1">
+                                    <a href="#" class="thumbnail">
+                                        <div class="caption">Clear Costumes</div>
+                                    </a>
+                                </div>
+
+                                <div class="col-xs-1">
+                                    <a href="#" class="thumbnail">
+                                        <img src="https://dl.dropboxusercontent.com/u/2430412/STEP/dave/particles/resources/bear.png">
+                                        <div class="caption">Red</div>
+                                    </a>
+                                </div>
+
+                                <div class="col-xs-1">
+                                    <a href="#" class="thumbnail">
+                                        <img src="https://dl.dropboxusercontent.com/u/2430412/STEP/dave/particles/resources/deer.png">
+                                        <div class="caption">Red</div>
+                                    </a>
+                                </div>
+
+                                <div class="col-xs-1">
+                                    <a href="#" class="thumbnail">
+                                        <img src="https://dl.dropboxusercontent.com/u/2430412/STEP/dave/particles/resources/fox.png">
+                                        <div class="caption">Red</div>
+                                    </a>
+                                </div>
+
+<pre>
+Please list all images from the dropbox folder:
+
+['bear','deer','fox','snake','kangaroo','vulture','duck','lizard','turtle','ladybug','whale','shark','icecube','icemelting','icemoremelted','puddle','snowball','snowman','wave','sun','firesprite','icesprite','ghost','tornado','gas']
+
+When a costume button is pushed, send a SET_COSTUME call to Particles.
+
+// UNISYS CALLS
+
+// Set Costume
+var data = {};
+data.costumeURL = "https://dl.dropboxusercontent.com/u/2430412/STEP/dave/particles/resources/deer.png";
+UNISYS.Call('SET_COSTUME', data);
+
+// Clear Costume
+UNISYS.Call('SET_COSTUME', {});
+
+</pre>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- PLAYBACK TAB =================================================== -->
+                    <div role="tabpanel" class="tab-pane" id="playback">
+                        <div class="panel">
+                            <div class="col-xs-9">
                                 <div>
                                     <img src="img/1.jpg" width="45%">
-                                    <img src="img/1.jpg" width="45%"> 
+                                    <img src="img/1.jpg" width="45%">
                                 </div>
-                                <button class="btn btn-lrg">Start Recording</button>                                 
-                                <div class="btn-group"> 
+                                <button class="btn btn-lrg">Start Recording</button>
+                                <div class="btn-group">
                                     <label>Timer</label>
                                     <button type="button" class="btn btn-default">-</button>
                                     <button type="button" class="btn" disabled>30 s</button>
@@ -152,18 +207,18 @@
                                 <button class="btn btn-lrg btn-primary">Capture Screenshot</button>
                                 <br />
                                 <div class="well">
-                                    <input type="range"> 
-                                    <button class="btn btn-lrg">&lt;&lt;</button>                                     
-                                    <button class="btn btn-lrg">&lt;10s</button>                                     
-                                    <button class="btn btn-lrg">&lt;1s</button>                                     
+                                    <input type="range">
+                                    <button class="btn btn-lrg">&lt;&lt;</button>
+                                    <button class="btn btn-lrg">&lt;10s</button>
+                                    <button class="btn btn-lrg">&lt;1s</button>
                                     <button class="btn btn-primary btn-lrg">Play</button>
-                                    <button class="btn btn-lrg">&gt;1s</button>                                     
-                                    <button class="btn btn-lrg">&gt;10s</button>                                     
+                                    <button class="btn btn-lrg">&gt;1s</button>
+                                    <button class="btn btn-lrg">&gt;10s</button>
                                     <button class="btn btn-lrg">&gt;&gt;</button>
                                 </div>
                                 <!-- SCREEN TAB ==================================================== -->
                                 <!-- Bootstrap doesn't support nested tabs, so this needs to be a custom control -->
-                                <div class="btn-group"> 
+                                <div class="btn-group">
                                     <button type="button" class="btn btn-default" onclick="$('#session').show();$('#overlay').hide();">Manage Sessions</button>
                                     <button type="button" class="btn" onclick="$('#session').hide();$('#overlay').show();">Manage Overlays</button>
                                 </div>
@@ -244,200 +299,6 @@
                                         <br />
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ANNOTATE TAB =================================================== -->
-                    <div role="tabpanel" class="tab-pane" id="annotate">
-                        <div class="panel">
-                            <div class="col-xs-8">
-                                <a href="#" class="thumbnail">
-                                    <img src="img/1.jpg">
-                                    <div class="caption">Aug 3 3:31p</div>
-                                    <button disabled class="btn btn-lrg btn-primary">&lt; Add to Overlay</button>
-                                </a>
-                            </div>
-                            <div class="col-xs-4">
-                                <div class="well">
-                                    <h4>My Saved Screens</h4>
-                                    <style>
-                                        .screens .thumbnail { margin: 5px; }
-                                        .screens .thumbnail img { width: 80px; display: inline-block; margin: 0; }
-                                        .screens .caption { display: inline-block; }
-                                    </style>
-                                    <div class="screens" style="height:500px;overflow-y:scroll;">
-                                        <a href="#" class="thumbnail">
-                                            <img src="img/1.jpg">
-                                            <div class="caption">Aug 3 3:32p</div>
-                                        </a>
-                                        <a href="#" class="thumbnail">
-                                            <img src="img/2.jpg">
-                                            <div class="caption">Aug 3 3:35p</div>
-                                        </a>
-                                        <a href="#" class="thumbnail">
-                                            <img src="img/3.jpg">
-                                            <div class="caption">Aug 4 2:35p</div>
-                                        </a>
-                                        <a href="#" class="thumbnail">
-                                            <img src="img/4.jpg">
-                                            <div class="caption">Aug 5 2:35p</div>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="well">
-                                    <div class="btn-group"> 
-                                        <button type="button" class="btn btn-default">Pen</button>
-                                        <button type="button" class="btn btn-default">Eraser</button>
-                                        <button type="button" class="btn btn-default">.</button>
-                                        <button type="button" class="btn btn-default">o</button>
-                                        <button type="button" class="btn btn-default">O</button>
-                                        <button type="button" class="btn btn-default">Red</button>
-                                        <button type="button" class="btn btn-default">Orange</button>
-                                        <button type="button" class="btn btn-default">Yellow</button>
-                                        <button type="button" class="btn btn-default">Green</button>
-                                        <button type="button" class="btn btn-default">Blue</button>
-                                        <button type="button" class="btn btn-default">Purple</button>
-                                        <button type="button" class="btn btn-default">Move</button>
-                                        <button disabled class="btn btn-lrg">Undo</button>
-                                        <button disabled class="btn btn-lrg">Redo</button>
-                                        <button disabled class="btn btn-lrg">Clear</button>
-                                    </div>
-                                    <br />
-                                    <br />
-                                    <button disabled class="btn btn-lrg">Add Slider</button>
-                                    <button disabled class="btn btn-lrg">Add Tracker</button>
-                                    <button disabled class="btn btn-lrg">Draw Graph</button>
-                                    <button disabled class="btn btn-lrg">Add Counters</button>
-                                    <br />
-                                    <br />
-                                    <button disabled class="btn btn-lrg btn-primary">Save to My Saved Screens</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- STUDENT TAB =================================================== -->
-                    <div role="tabpanel" class="tab-pane" id="students">
-                        <div class="panel">
-                            <div class="col-xs-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="img/1.jpg">
-                                    <div class="caption">Red</div>
-                                </a>
-                            </div>
-                            <div class="col-xs-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="img/2.jpg">
-                                    <div class="caption">Orange</div>
-                                </a>
-                            </div>
-                            <div class="col-xs-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="img/3.jpg">
-                                    <div class="caption">Yellow</div>
-                                </a>
-                            </div>
-                            <div class="col-xs-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="img/4.jpg">
-                                    <div class="caption">Green</div>
-                                </a>
-                            </div>
-                            <div class="col-xs-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="img/5.jpg">
-                                    <div class="caption">Blue</div>
-                                </a>
-                            </div>
-                            <div class="col-xs-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="img/6.jpg">
-                                    <div class="caption">Indigo</div>
-                                </a>
-                            </div>
-                            <div class="col-xs-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="img/7.jpg">
-                                    <div class="caption">Violet</div>
-                                </a>
-                            </div>
-                            <div class="col-xs-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="img/8.jpg">
-                                    <div class="caption">White</div>
-                                </a>
-                            </div>
-                            <div class="col-xs-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="img/9.jpg">
-                                    <div class="caption">Black</div>
-                                </a>
-                            </div>
-                            <div class="col-xs-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="img/10.jpg">
-                                    <div class="caption">Gray</div>
-                                </a>
-                            </div>
-                            <div class="col-xs-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="img/11.jpg">
-                                    <div class="caption">Stars</div>
-                                </a>
-                            </div>
-                            <div class="col-xs-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="img/12.jpg">
-                                    <div class="caption">Stripes</div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <h3>Red</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <h4>Saved Screens</h4>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <a href="#" class="thumbnail">
-                                            <img src="img/2.jpg">
-                                            <div class="caption">2016-04-14 4:32pm</div>
-                                        </a>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <a href="#" class="thumbnail">
-                                            <img src="img/3.jpg">
-                                            <div class="caption">2016-04-14 4:44pm</div>
-                                        </a>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <a href="#" class="thumbnail">
-                                            <img src="img/4.jpg">
-                                            <div class="caption">2016-04-15 4:31pm</div>
-                                        </a>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <a href="#" class="thumbnail">
-                                            <img src="img/5.jpg">
-                                            <div class="caption">2016-04-15 4:35pm</div>
-                                        </a>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <a href="#" class="thumbnail">
-                                            <img src="img/6.jpg">
-                                            <div class="caption">2016-04-15 4:38pm</div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-8">
-                                <h4>Selected Screen</h4>
-                                <a href="#" class="thumbnail">
-                                    <img src="img/1.jpg">
-                                </a>
-                                <button class="btn btn-primary btn-lrg">&lt; Add to Overlay</button>
                             </div>
                         </div>
                     </div>
